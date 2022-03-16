@@ -198,6 +198,7 @@ static void sip_task(void* pvParameters)
             if (!result)
             {
                 ESP_LOGI(TAG, "Waiting to try again...");
+               
                 vTaskDelay(2000 / portTICK_RATE_MS);
                 continue;
             }
@@ -208,6 +209,7 @@ static void sip_task(void* pvParameters)
         }
 
         ctx->io_context->run();
+       
         // The io_context was stopped, to be able to call run() again later, restart must be called.
         ctx->io_context->restart();
     }
@@ -233,6 +235,7 @@ extern "C" void app_main(void)
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &event_handler, &handlers, nullptr));
 
     start_wifi();
+   
 
     // reseed after initializing wifi
     std::srand(esp_random());
